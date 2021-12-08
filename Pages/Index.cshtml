@@ -1,0 +1,39 @@
+﻿@page "/pages"
+@model IndexModel
+
+<h4 class="bg-primary text-white text-center p-2">Слова в базе</h4>
+
+<table class="table table-sm table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>№</th><th>Имя</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Word w in Model.Words)
+        {
+            <tr>
+                <td>@w.WordId</td>
+                <td>@w.Meaning</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@functions
+{
+    public class IndexModel: PageModel
+    {
+        private DataContext context;
+        public IndexModel(DataContext dbContext)
+        {
+            context = dbContext;
+        }
+        public IEnumerable<Word> Words { get; set; }
+
+        public void OnGet()
+        {
+            Words = context.Words;
+        }
+    }
+}
