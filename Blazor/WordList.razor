@@ -1,0 +1,25 @@
+﻿<table class="table table-sm table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Значение</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Word w in Words)
+        {
+            <tr>
+                <td>@w.WordId</td>
+                <td>@w.Meaning</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code
+{
+    [Inject]
+    public DataContext Context { get; set; }
+
+    public IEnumerable<Word> Words => Context.Words.Include(w => w.Meaning);    
+}

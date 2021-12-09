@@ -29,6 +29,7 @@ namespace Upletter
             opts.EnableSensitiveDataLogging(true);
             });
             services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddServerSideBlazor();
         }
         public void Configure(IApplicationBuilder app, DataContext context)
         {
@@ -39,6 +40,7 @@ namespace Upletter
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapBlazorHub();
             });
 
             SeedData.SeedDatabase(context);
