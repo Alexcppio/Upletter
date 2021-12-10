@@ -1,24 +1,33 @@
 ﻿@page "/pages"
 @model IndexModel
 
-<h4 class="bg-primary text-white text-center p-2">Слова в базе</h4>
-
-<table class="table table-sm table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>№</th><th>Имя</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Word w in Model.Words)
-        {
+<div class="m-2">
+    <h4 class="bg-primary text-white text-center p-2">Слова в базе</h4>
+    <a asp-page="Create" class="btn btn-primary">Добавить</a>
+    <table class="table table-sm table-bordered table-striped">
+        <thead>
             <tr>
-                <td>@w.WordId</td>
-                <td>@w.Meaning</td>
+                <th>№</th>
+                <th>Имя</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (Word w in Model.Words)
+            {
+                <tr>
+                    <td>@w.WordId</td>
+                    <td>@w.Meaning</td>
+                    <td class="text-center">
+                        <a asp-page="Edit" asp-route-id="@w.WordId"
+                           class="btn btn-sm btn-warning">Изменить</a>
+                        <a asp-page="Delete" asp-route-id="@w.WordId"
+                           class="btn btn-sm btn-danger">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @functions
 {

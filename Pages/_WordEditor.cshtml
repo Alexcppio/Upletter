@@ -1,0 +1,25 @@
+﻿@model WordViewModel
+
+<partial name="_Validation" />
+
+<h5 class="bg-@Model.Theme text-white text-center p-2">@Model.Action</h5>
+
+<form asp-page="@Model.Action" method="post">
+    <div class="form-group">
+        <label asp-for="Word.WordId"></label>
+        <input class="form-control" asp-for="Word.WordId" readonly />
+    </div>
+    <div class="form-group">
+        <label asp-for="Word.Meaning"></label>
+        <div>
+            <span asp-validation-for="Word.Meaning" class="text-danger"></span>
+        </div>
+        <input class="form-control" asp-for="Word.Meaning"
+               readonly="@Model.ReadOnly" />
+    </div>
+    @if(Model.ShowAction)
+    {
+        <button class="btn btn-@Model.Theme" type="submit">@Model.Action</button>
+    }
+    <a class="btn btn-secondary" asp-page="Index">Back</a>
+</form> 
