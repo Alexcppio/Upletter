@@ -23,6 +23,10 @@ namespace Upletter
         public IConfiguration Configuration { get; set; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AddPageRoute("/StartPage", "");
+            });
             services.AddDbContext<DataContext>(opts => {
             opts.UseSqlServer(Configuration[
                 "ConnectionStrings:WordsConnection"]);
@@ -39,8 +43,8 @@ namespace Upletter
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
-                endpoints.MapBlazorHub();
             });
 
             SeedData.SeedDatabase(context);

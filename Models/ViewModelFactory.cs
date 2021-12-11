@@ -32,7 +32,7 @@ namespace Upletter.Models
             {
                 Word = w,
                 Theme = "warning",
-                Action = "Edit"
+                Action = "Изменить"
             };
         }
 
@@ -41,7 +41,7 @@ namespace Upletter.Models
             return new WordViewModel
             {
                 Word = word,
-                Action = "Delete",
+                Action = "Удалить",
                 ReadOnly = true,
                 Theme = "danger"
             };
