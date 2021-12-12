@@ -1,48 +1,19 @@
-﻿@page "/pages"
+﻿@page
 @model IndexModel
 
-<div class="m-2">
-    <h4 class="bg-primary text-white text-center p-2">Слова в базе</h4>
-    <a asp-page="Create" class="btn btn-primary">Добавить</a>
-    <table class="table table-sm table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>№</th>
-                <th>Имя</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Word w in Model.Words)
-            {
-                <tr>
-                    <td>@w.WordId</td>
-                    <td>@w.Meaning</td>
-                    <td class="text-center">
-                        <a asp-page="Edit" asp-route-id="@w.WordId"
-                           class="btn btn-sm btn-warning">Изменить</a>
-                        <a asp-page="Delete" asp-route-id="@w.WordId"
-                           class="btn btn-sm btn-danger">Удалить</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
-@functions
-{
-    public class IndexModel: PageModel
-    {
-        private DataContext context;
-        public IndexModel(DataContext dbContext)
-        {
-            context = dbContext;
-        }
-        public IEnumerable<Word> Words { get; set; }
-
-        public void OnGet()
-        {
-            Words = context.Words;
-        }
-    }
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="/lib/twitter-bootstrap/css/bootstrap.min.css"
+          rel="stylesheet" />
+</head>
+<body>
+    <h5 class="bg-primary text-white text-center m-2 p-2">Замена первой буквы в словах на большую</h5>
+    <a asp-page="WordList" class="btn btn-primary">Слова в базе</a>
+    <button class="btn btn-primary">Заменить</button>
+    <div class="form-group">
+        <label for="Textarea">Вставьте текст</label>
+        <textarea class="form-control" name="MainText" rows="12">@Model.MainText</textarea>
+    </div>
+</body>
+</html>

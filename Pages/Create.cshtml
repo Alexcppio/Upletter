@@ -22,7 +22,7 @@
                 word.WordId = default;
                 DataContext.Words.Add(word);
                 await DataContext.SaveChangesAsync();
-                return RedirectToPage(nameof(Index));
+                return RedirectToPage("WordList");
             }
             ViewModel =
                 ViewModelFactory.Create(word);

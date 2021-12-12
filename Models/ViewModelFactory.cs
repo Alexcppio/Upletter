@@ -22,26 +22,26 @@ namespace Upletter.Models
             return new WordViewModel
             {
                 Word = w,
-                Action = "Добавить"
+                Action = "Create"
             };
         }
 
-        public static WordViewModel Edit (Word w)
+        public static WordViewModel Edit(Word w)
         {
             return new WordViewModel
             {
                 Word = w,
                 Theme = "warning",
-                Action = "Изменить"
+                Action = "Edit"
             };
         }
 
-        public static WordViewModel Delete(Word word)
+        public static WordViewModel Delete(Word w)
         {
             return new WordViewModel
             {
-                Word = word,
-                Action = "Удалить",
+                Word = w,
+                Action = "Delete",
                 ReadOnly = true,
                 Theme = "danger"
             };

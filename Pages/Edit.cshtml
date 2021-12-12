@@ -22,7 +22,7 @@
             {
                 DataContext.Words.Update(w);
                 await DataContext.SaveChangesAsync();
-                return RedirectToPage(nameof(Index));
+                return RedirectToPage("WordList");
             }
             ViewModel = ViewModelFactory.Edit(w);
             return Page();

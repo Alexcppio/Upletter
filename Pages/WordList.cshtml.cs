@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Upletter.Pages
 {
-    public class StartPageModel : PageModel
+    public class WordListModel : PageModel
     {
         public void OnGet()
         {
