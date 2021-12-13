@@ -10,10 +10,27 @@
 <body>
     <h5 class="bg-primary text-white text-center m-2 p-2">Замена первой буквы в словах на большую</h5>
     <a asp-page="WordList" class="btn btn-primary">Слова в базе</a>
-    <button class="btn btn-primary">Заменить</button>
-    <div class="form-group">
-        <label for="Textarea">Вставьте текст</label>
-        <textarea class="form-control" name="MainText" rows="12">@Model.MainText</textarea>
-    </div>
+    <form method="post">
+        <textarea rows="10" cols="100" name="text">@Model.Message</textarea>
+        <input class="btn btn-primary" type="submit" value="Заменить" />
+    </form>
 </body>
 </html>
+
+@functions
+{
+    public class IndexModel : PageModel
+    {
+        public string Message { get; set; }
+
+        public void OnGet()
+        {
+            Message = "";
+        }
+
+        public void OnPost(string text)
+        {
+            Message = text.ToLower();
+        }
+    }
+}
