@@ -9,10 +9,10 @@
 </head>
 <body>
     <h5 class="bg-primary text-white text-center m-2 p-2">Замена первой буквы в словах на большую</h5>
-    <a asp-page="WordList" class="btn btn-primary">Слова в базе</a>
     <form method="post">
-        <textarea rows="10" cols="100" name="text">@Model.Message</textarea>
+        <textarea class="form-control" rows="10" name="text">@Model.Message</textarea>
         <input class="btn btn-primary" type="submit" value="Заменить" />
+        <a asp-page="WordList" class="btn btn-primary">Слова в базе</a>
     </form>
 </body>
 </html>
