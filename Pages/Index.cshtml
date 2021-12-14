@@ -30,7 +30,10 @@
 
         public void OnPost(string text)
         {
-            Message = text.ToLower();
+            if (text != null)
+                Message = text.ToLower();
+            else
+                Message = "";
         }
     }
 }
