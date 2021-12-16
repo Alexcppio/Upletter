@@ -30,6 +30,7 @@
                     </li>
                 }
             </ul>
+
         </div>
     </div>
 </body>
@@ -39,20 +40,37 @@
 {
     public class IndexModel : PageModel
     {
-        public string Message { get; set; }
-        public string[] WordList { get; set; } = { "One", "Two", "Three" };
+        public string Message { get; set; } = @"
+    Уорд Каннингем и его соавтор Бо Леуф в их книге The Wiki Way: Quick Collaboration on the Web описали сущность концепции вики следующим образом:
+    Вики предлагает всем пользователям редактировать любую страницу или создавать новые страницы на вики-сайте, используя обычный веб-браузер без каких-либо его расширений.
+    Вики поддерживает связи между разными страницами за счёт почти интуитивно понятного создания ссылок на другие страницы и отображения того, существуют данные страницы или нет.
+    Вики не является тщательно изготовленным сайтом для случайных посетителей. Напротив, Вики стремится привлечь посетителей к непрерывному процессу создания и сотрудничества, который постоянно меняет вид сайта.
+    ";
+        public List<string> WordList = new List<string>() { " " };
+
+        public char[] Separators { get; set; } = { ' ', '.', ':', ',' };
 
         public void OnGet()
         {
-            Message = "";
         }
 
         public void OnPost(string text)
         {
             if (text != null)
-                Message = text.ToLower();
+            {
+                var temp = text.Split(Separators, StringSplitOptions.RemoveEmptyEntries).Distinct();
+                foreach(var w in temp)
+                {
+                    if(char.IsUpper(w[0]))
+                    {
+                        WordList.Add(w);
+                    }
+                }
+                Message = text;
+            }
             else
                 Message = "";
+            WordList.Add("");
         }
     }
 }
