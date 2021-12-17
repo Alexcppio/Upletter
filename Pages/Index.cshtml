@@ -41,14 +41,16 @@
     public class IndexModel : PageModel
     {
         public string Message { get; set; } = @"
-    Уорд Каннингем и его соавтор Бо Леуф в их книге The Wiki Way: Quick Collaboration on the Web описали сущность концепции вики следующим образом:
-    Вики предлагает всем пользователям редактировать любую страницу или создавать новые страницы на вики-сайте, используя обычный веб-браузер без каких-либо его расширений.
-    Вики поддерживает связи между разными страницами за счёт почти интуитивно понятного создания ссылок на другие страницы и отображения того, существуют данные страницы или нет.
-    Вики не является тщательно изготовленным сайтом для случайных посетителей. Напротив, Вики стремится привлечь посетителей к непрерывному процессу создания и сотрудничества, который постоянно меняет вид сайта.
-    ";
+Уорд Каннингем и его соавтор Бо Леуф в их книге The Wiki Way: Quick Collaboration on the Web описали сущность концепции вики следующим образом:
+Вики предлагает всем пользователям редактировать любую страницу или создавать новые страницы на вики-сайте, используя обычный веб-браузер без каких-либо его расширений.
+Вики поддерживает связи между разными страницами за счёт почти интуитивно понятного создания ссылок на другие страницы и отображения того, существуют данные страницы или нет.
+Вики не является тщательно изготовленным сайтом для случайных посетителей. Напротив, Вики стремится привлечь посетителей к непрерывному процессу создания и сотрудничества, который постоянно меняет вид сайта.
+";
         public List<string> WordList = new List<string>() { " " };
 
-        public char[] Separators { get; set; } = { ' ', '.', ':', ',' };
+        public char[] SentenceSeparators { get; set; } = { '.', '!', '?' };
+
+        public char[] Separators { get; set; } = { ' ', ';', ':', ',' };
 
         public void OnGet()
         {
@@ -58,12 +60,16 @@
         {
             if (text != null)
             {
-                var temp = text.Split(Separators, StringSplitOptions.RemoveEmptyEntries).Distinct();
-                foreach(var w in temp)
+                WordList.Remove(" ");
+                var temp = text.Split(SentenceSeparators, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
+                for(var i = 0; i < temp.Length; i++)
                 {
-                    if(char.IsUpper(w[0]))
+                    var temp2 = temp[i].Split(Separators, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
+                    for(var j = 1; j < temp2.Length; j++)
                     {
-                        WordList.Add(w);
+                        var ch = temp2[j];
+                        if (char.IsUpper(ch[0]))
+                            WordList.Add(temp2[j]);
                     }
                 }
                 Message = text;
