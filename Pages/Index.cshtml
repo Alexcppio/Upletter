@@ -29,26 +29,6 @@
                 }
             </ul>
         </div>
-        <div class="col">
-            <h4 class="bg-primary text-white text-center p-2">Слова в базе</h4>
-            <table class="table table-sm table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Имя</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (Word w in Model.Words1)
-                    {
-                        <tr>
-                            <td>@w.WordId</td>
-                            <td>@w.Meaning</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
     </div>
 </body>
 </html>
@@ -57,6 +37,12 @@
 {
     public class IndexModel : PageModel
     {
+        public IEnumerable<Word> Words { get; set; }
+        public IndexModel(DataContext dbContext)
+        {
+            Words = dbContext.Words;
+        }
+
         public string Message { get; set; } = @"
 Уорд Каннингем и его соавтор Бо Леуф в их книге The Wiki Way: Quick Collaboration on the Web описали сущность концепции вики следующим образом:
 Вики предлагает всем пользователям редактировать любую страницу или создавать новые страницы на вики-сайте, используя обычный веб-браузер без каких-либо его расширений.
@@ -69,18 +55,8 @@
 
         public char[] Separators { get; set; } = { ' ', ';', ':', ',' };
 
-        private DataContext context1;
-
-        public IndexModel(DataContext dbContext)
-        {
-            context1 = dbContext;
-        }
-
-        public IEnumerable<Word> Words1 { get; set; }
-
         public void OnGet()
         {
-            Words1 = context1.Words;
         }
 
         public void OnPost(string text)
@@ -96,7 +72,20 @@
                     {
                         var ch = temp2[j];
                         if (char.IsUpper(ch[0]))
-                            WordList.Add(temp2[j]);
+                        {
+                            var flag = false;
+                            foreach(var word in Words)
+                            {
+                                if (temp2[j] == word.Meaning)
+                                {
+                                    flag = true;
+                                }
+                            }
+                            if(flag == false)
+                            {
+                                WordList.Add(temp2[j]);
+                            }
+                        }
                     }
                 }
                 var WordArr = WordList.ToArray();
