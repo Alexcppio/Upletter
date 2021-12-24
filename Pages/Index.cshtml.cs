@@ -87,4 +87,27 @@ namespace Upletter.Pages
             return tempText.ToString();
         }
     }
+
+    public class CreateManyModel : EditorPageModel
+    {
+        public CreateManyModel(DataContext dbContext) : base(dbContext) { }
+        public void OnGet()
+        {
+            ViewModel = ViewModelFactory.Create(new Word());
+        }
+        public async Task<IActionResult>
+            OnPostAsync([FromForm] Word word)
+        {
+            if (ModelState.IsValid)
+            {
+                word.WordId = default;
+                DataContext.Words.Add(word);
+                await DataContext.SaveChangesAsync();
+                return RedirectToPage("WordList");
+            }
+            ViewModel =
+                ViewModelFactory.Create(word);
+            return Page();
+        }
+    }
 }

@@ -4,29 +4,3 @@
 <div class="m-2">
     <partial name="_WordEditor" model="@Model.ViewModel" />
 </div>
-
-@functions
-{
-    public class CreateModel: EditorPageModel
-    {
-        public CreateModel(DataContext dbContext): base(dbContext) { }
-        public void OnGet()
-        {
-            ViewModel = ViewModelFactory.Create(new Word());
-        }
-        public async Task<IActionResult>
-            OnPostAsync([FromForm] Word word)
-        {
-            if (ModelState.IsValid)
-            {
-                word.WordId = default;
-                DataContext.Words.Add(word);
-                await DataContext.SaveChangesAsync();
-                return RedirectToPage("WordList");
-            }
-            ViewModel =
-                ViewModelFactory.Create(word);
-            return Page();
-        }
-    }
-}

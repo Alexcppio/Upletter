@@ -4,28 +4,3 @@
 <div class="m-2">
     <partial name="_WordEditor" model="@Model.ViewModel" />
 </div>
-
-@functions
-{
-    public class EditModel: EditorPageModel
-    {
-        public EditModel(DataContext dbContext): base(dbContext) { }
-        public async Task OnGetAsync(long id)
-        {
-            Word w = await this.DataContext.Words.FindAsync(id);
-            ViewModel = ViewModelFactory.Edit(w);
-        }
-        public async Task<IActionResult>
-            OnPostAsync([FromForm] Word w)
-        {
-            if(ModelState.IsValid)
-            {
-                DataContext.Words.Update(w);
-                await DataContext.SaveChangesAsync();
-                return RedirectToPage("WordList");
-            }
-            ViewModel = ViewModelFactory.Edit(w);
-            return Page();
-        }
-    }
-}
