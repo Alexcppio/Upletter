@@ -12,7 +12,7 @@ namespace Upletter.Pages
     public class IndexModel : PageModel
     {
         public IEnumerable<Word> Words { get; set; }
-        public List<string> WordList = new List<string>() { " " };
+        public List<string> WordList { get; set; } = new List<string>() { " " };
         public IndexModel(DataContext dbContext)
         {
             Words = dbContext.Words;
@@ -26,7 +26,6 @@ namespace Upletter.Pages
         ";
         public char[] SentenceSeparators { get; set; } = { '.', '!', '?' };
         public char[] Separators { get; set; } = { ' ', ';', ':', ',' };
-
         public void OnGet() {}
         public void OnPost(string text)
         {
@@ -35,6 +34,7 @@ namespace Upletter.Pages
                 var WordArr = GetWords(text).ToArray();
                 Array.Sort(WordArr);
                 WordList = WordArr.Distinct().ToList();
+                TempData["Head"] = WordList.ToString();
                 Message = GetNewText(text);
             }
             else
