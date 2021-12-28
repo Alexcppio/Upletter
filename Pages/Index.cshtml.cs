@@ -26,26 +26,35 @@ namespace Upletter.Pages
         ";
         public char[] SentenceSeparators { get; set; } = { '.', '!', '?' };
         public char[] Separators { get; set; } = { ' ', ';', ':', ',' };
-        public void OnGet() {}
+        public void OnGet() 
+        {
+        }
         public void OnPost(string text)
         {
             if (text != null)
             {
                 var WordArr = GetWords(text).ToArray();
                 Array.Sort(WordArr);
-                WordList = WordArr.Distinct().ToList();
-                TempData["Head"] = WordList.ToString();
+                WordList = WordArr.ToList();
+                //TempData["Head"] = WordList.ToString();
                 Message = GetNewText(text);
             }
             else
             {
                 Message = "";
-                WordList.Add("");
+                //WordList.Add("");
             }
+        }
+        public void OnPostCreate()
+        {
+            Message += WordList.Count.ToString();
+            foreach (var w in WordList)
+                Message += w;
         }
         public List<string> GetWords(string text)
         {
-            WordList.Clear();
+            //WordList.Clear();
+            List<string> tempList = new List<string>() { " " };
             var temp = text.Split(SentenceSeparators, StringSplitOptions.RemoveEmptyEntries).Distinct().ToArray();
             for (var i = 0; i < temp.Length; i++)
             {
@@ -65,12 +74,12 @@ namespace Upletter.Pages
                         }
                         if (flag == false)
                         {
-                            WordList.Add(temp2[j]);
+                            tempList.Add(temp2[j]);
                         }
                     }
                 }
             }
-            return WordList;
+            return tempList;
         }
         public string GetNewText(string text)
         {
