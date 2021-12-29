@@ -42,7 +42,7 @@ namespace Upletter.Pages
             else
             {
                 Message = "";
-                //WordList.Add("");
+                WordList.Add("");
             }
         }
         public void OnPostCreate()
