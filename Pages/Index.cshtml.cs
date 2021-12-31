@@ -36,7 +36,7 @@ namespace Upletter.Pages
                 var WordArr = GetWords(text).ToArray();
                 Array.Sort(WordArr);
                 WordList = WordArr.ToList();
-                //TempData["Head"] = WordList.ToString();
+                //TempData["Head"] = WordList.ToString();//
                 Message = GetNewText(text);
             }
             else
