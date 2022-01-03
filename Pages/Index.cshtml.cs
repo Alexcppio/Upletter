@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Upletter.Blazor;
 using Upletter.Models;
 
 namespace Upletter.Pages
@@ -13,6 +14,8 @@ namespace Upletter.Pages
     {
         public IEnumerable<Word> Words { get; set; }
         public List<string> WordList { get; set; } = new List<string>() { " " };
+        //[TempData]
+        //public string FormResult { get; set; } = " ";
         public IndexModel(DataContext dbContext)
         {
             Words = dbContext.Words;
@@ -36,7 +39,7 @@ namespace Upletter.Pages
                 var WordArr = GetWords(text).ToArray();
                 Array.Sort(WordArr);
                 WordList = WordArr.ToList();
-                //TempData["Head"] = WordList.ToString();//
+                //FormResult = string.Join(".", WordArr);
                 Message = GetNewText(text);
             }
             else
@@ -47,9 +50,9 @@ namespace Upletter.Pages
         }
         public void OnPostCreate()
         {
-            Message += WordList.Count.ToString();
-            foreach (var w in WordList)
-                Message += w;
+            //Message += FormResult.Length.ToString();
+            //foreach (var w in FormResult)
+            //Message += w;
         }
         public List<string> GetWords(string text)
         {
