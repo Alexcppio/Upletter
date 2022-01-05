@@ -29,7 +29,6 @@ namespace Upletter
             opts.EnableSensitiveDataLogging(true);
             });
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            services.AddServerSideBlazor();
         }
         public void Configure(IApplicationBuilder app, DataContext context)
         {
