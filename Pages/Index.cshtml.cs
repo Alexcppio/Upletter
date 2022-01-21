@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Upletter.Blazor;
@@ -13,12 +14,13 @@ namespace Upletter.Pages
     public class IndexModel : PageModel
     {
         public IEnumerable<Word> Words { get; set; }
+        public HttpContext httpContext;
         public List<string> WordList { get; set; } = new List<string>() { " " };
-        //[TempData]
-        //public string FormResult { get; set; }
-        public IndexModel(DataContext dbContext)
+        public static string FormResult { get; set; }
+        public IndexModel(DataContext dbContext, HttpContext httpContext)
         {
             Words = dbContext.Words;
+            this.httpContext = httpContext;
         }
 
         public string Message { get; set; }
@@ -39,20 +41,20 @@ namespace Upletter.Pages
                 var WordArr = GetWords(text).ToArray();
                 Array.Sort(WordArr);
                 WordList = WordArr.ToList();
-                //FormResult = string.Join(".", WordArr);
+                FormResult = string.Join(".", WordArr);
                 Message = GetNewText(text);
             }
             else
             {
-                Message = "";
+                //Message = "";
                 WordList.Add("");
             }
         }
         public void OnPostCreate()
         {
-            //Message += FormResult.Length.ToString();
-            //foreach (var w in FormResult)
-            //Message += w;
+            StringBuilder sb = new StringBuilder();
+            sb.Append(httpContext.Items.Count);
+            Message = sb.ToString();
         }
         public List<string> GetWords(string text)
         {
